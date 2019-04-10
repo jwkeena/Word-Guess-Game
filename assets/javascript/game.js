@@ -8,7 +8,7 @@ document.onkeyup = function(event) {
         game.startGame();
     } else {
         game.guessLetter();
-        // game.checkLetter();
+        game.checkLetter();
     }
 }
 
@@ -25,12 +25,11 @@ const game = {
     },
     
     //toggle difficulty (easy mode does first name only, hard mode does first and last)
-    isEasyMode: true,
+    isFirstNamesOnly: true,
     changeMode: function() {
-        if (isEasyMode) {
-            isEasyMode = false;
+        if (this.isFirstNamesOnly) {
         } else {
-            isEasyMode = true;
+            this.isFirstNamesOnly = true;
         }},
     
     //tracks wins
@@ -58,7 +57,7 @@ const game = {
             this.lose();
         }
         this.lettersGuessed.push(letter);
-        document.getElementById("letters-guessed").innerHTML = this.lettersGuessed;
+        document.getElementById("letters-guessed").innerHTML = this.lettersGuessed.join(", ");
     },
 
     //stores user input for current game
@@ -81,20 +80,17 @@ const game = {
         this.currentCharacter.numOfLettersLast = newCharacter[1].length;
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
         for (i = 0; i < this.currentCharacter.numOfLettersFirst; i++) {
-            document.getElementById("current-character-first").textContent += "_ "
-            console.log(i);
+            document.getElementById("first" + i).innerText = "_ ";
+            // first way to print the desired number of underscores: document.getElementById("current-character-first").textContent += "_ "
+            }
+        if (this.isFirstNamesOnly != true) {
+            for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
+            document.getElementById("last" + i).innerText = "_ ";
+            }
         }
-        
-        
-        // for (i = 0; i < this.numOfLettersFirst; i ++) {
-        //     const firstNameHTML = document.getElementById("current-character-first");
-        //     const newSpace = document.createTextNode("_ ");
-        //     firstNameHTML.appendChild(newSpace);
-        // }
-    
         },
     // writeCharacterToScreen: function() {
-    //     if (this.isEasyMode) {
+    //     if (this.isFirstNamesOnly) {
     //         document.getElementById("current-character-first").innerText = this.currentCharacter.firstName.toUpperCase();
     //         document.getElementById("current-character-last").innerText = "";
     //     } else {
@@ -104,11 +100,11 @@ const game = {
     // },
     checkLetter: function() {
         for (i=0; i < this.currentCharacter.firstName.length; i++) {
-            
+            if (letter === this.currentCharacter.firstName[i].toLowerCase())
+            console.log(letter + " is a match")
         }
-        //make loop that checks user's letter against every letter in one or both arrays
-        //If a match is found
-        //If a match is not found, decrement guesses by one
+        //write same loop for last name
+
     },
     characters: [
         ["Michael", "Scott"],
