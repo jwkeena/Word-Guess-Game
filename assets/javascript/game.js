@@ -28,6 +28,7 @@ const game = {
     isFirstNamesOnly: true,
     changeMode: function() {
         if (this.isFirstNamesOnly) {
+            this.isFirstNamesOnly = false;
         } else {
             this.isFirstNamesOnly = true;
         }},
