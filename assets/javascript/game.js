@@ -15,12 +15,16 @@ document.onkeyup = function(event) {
 const game = {
     startGame: function() {
         isNewGame = !isNewGame
+        this.correctGuesses = 0;
         document.getElementById("start").innerText = "";
         this.guessesRemaining = 7;
         document.getElementById("guesses").innerText = 7;
         this.lettersGuessed = [];
-        document.getElementById("current-character-first").innerText = "";
-        document.getElementById("current-character-last").innerText = "";
+        document.getElementById("letters-guessed").innerText = "";
+        for (i=0; i < 11; i++){
+            document.getElementById("first" + i).innerText = "";
+            document.getElementById("last" + i).innerText = "";
+        }
         this.pickNewCharacter();
     },
     
@@ -37,6 +41,7 @@ const game = {
     wins: 0,
     win: function() {
         this.wins++
+        alert("You win/win/win! The important difference here is with win/win/win, we all win. Me too. I win for having successfully mediated a conflict at work.")
         document.getElementById("wins").innerText = this.wins;
         document.getElementById("start").innerText = "Press any key to begin another game!";
         isNewGame = !isNewGame;
@@ -58,12 +63,13 @@ const game = {
             this.lose();
         }
         this.lettersGuessed.push(letter);
-        document.getElementById("letters-guessed").innerHTML = this.lettersGuessed.join(", ");
+        document.getElementById("letters-guessed").innerHTML = this.lettersGuessed.join(", ").toUpperCase();
     },
 
     //stores user input for current game
-    guessesRemaining: 7, //Decrement this number each guess.
-    lettersGuessed: [], //Push letters the user presses to this object
+    correctGuesses: 0,
+    guessesRemaining: 7, 
+    lettersGuessed: [], 
     currentCharacter: {
         numOfLettersFirst: 0,
         numOfLettersLast: 0,
@@ -82,30 +88,35 @@ const game = {
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
         for (i = 0; i < this.currentCharacter.numOfLettersFirst; i++) {
             document.getElementById("first" + i).innerText = "_ ";
-            // first way to print the desired number of underscores: document.getElementById("current-character-first").textContent += "_ "
             }
-        if (this.isFirstNamesOnly != true) {
-            for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
-            document.getElementById("last" + i).innerText = "_ ";
+            if (this.isFirstNamesOnly === false) {
+                for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
+                document.getElementById("last" + i).innerText = "_ ";
+                }
             }
-        }
         },
-    // writeCharacterToScreen: function() {
-    //     if (this.isFirstNamesOnly) {
-    //         document.getElementById("current-character-first").innerText = this.currentCharacter.firstName.toUpperCase();
-    //         document.getElementById("current-character-last").innerText = "";
-    //     } else {
-    //         document.getElementById("current-character-first").innerText = this.currentCharacter.firstName.toUpperCase();
-    //         document.getElementById("current-character-last").innerText = this.currentCharacter.lastName.toUpperCase();
-    //     }
-    // },
+
     checkLetter: function() {
         for (i=0; i < this.currentCharacter.firstName.length; i++) {
-            if (letter === this.currentCharacter.firstName[i].toLowerCase())
-            console.log(letter + " is a match")
+            if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
+                console.log(letter + " is a match")
+                document.getElementById("first" + i).innerText = letter.toUpperCase();
+                ++this.correctGuesses;
+                    if (this.correctGuesses === this.currentCharacter.numOfLettersFirst) {
+                        this.win();
+                    }
+                }
+            if (this.isFirstNamesOnly === false) {
+                for (i=0; i < this.currentCharacter.lastName.length; i++) {
+                    if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
+                    console.log(letter + " is a match")
+                    document.getElementById("last" + i).innerText = letter;
+                    ++this.correctGuesses;
+                    //REWRITE FUNCTION TO ADD NUMBER OF FIRST AND LAST LETTERS FOR BOTH NAMES MODE
+                    }
+                }
+            }
         }
-        //write same loop for last name
-
     },
     characters: [
         ["Michael", "Scott"],
