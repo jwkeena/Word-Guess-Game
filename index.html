@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>The Office Name Guess Game</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+        <br>
+        <p class = "centered" id="start">Press any key to get started!</p><br>
+            <div class="logo-container">
+                <img src="assets/images/officelogo.png">
+                <span id = "title">name guess game</span>
+            </div>
+        <br>
+    
+        <div class="centered">
+            <p>CURRENT CHARACTER: <span id="current-character-first"></span> <span id="current-character-last"></span></p><br>
+            <p>Guesses remaining: <span id="guesses">7</span></p><br>
+            <p>Letters already guessed: <span id="letters-guessed"></span></p><br>
+            <p>Wins: <span id = "wins">0</span></p><br>
+            <p>Losses: <span id = "losses">0</span></p>
+        </div>
+
+        <script src="assets/javascript/game.js" async defer></script>
+    </body>
+</html>
