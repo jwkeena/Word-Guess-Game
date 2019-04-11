@@ -7,16 +7,16 @@ document.onkeyup = function(event) {
     if (isNewGame === false) {
         game.startGame();
     } else {
-        game.guessLetter();
         game.checkLetter();
+        game.guessLetter();
     }
 }
 
 const game = {
     startGame: function() {
-        isNewGame = !isNewGame
+        isNewGame = !isNewGame;
         this.correctGuesses = 0;
-        document.getElementById("start").innerText = "";
+        document.getElementById("start").innerText = "Computron has chosen the next character...";
         this.guessesRemaining = 7;
         document.getElementById("guesses").innerText = 7;
         this.lettersGuessed = [];
@@ -36,13 +36,14 @@ const game = {
         } else {
             this.isFirstNamesOnly = true;
         }},
-    
+
     //tracks wins
     wins: 0,
     win: function() {
-        this.wins++
+        game.wins++ //for some reason I can't put "this.wins" in this line 
+        console.log(this.wins)
         alert("You win/win/win! The important difference here is with win/win/win, we all win. Me too. I win for having successfully mediated a conflict at work.")
-        document.getElementById("wins").innerText = this.wins;
+        document.getElementById("wins").innerText = game.wins; //for some reason I can't put "this.wins" in this line 
         document.getElementById("start").innerText = "Press any key to begin another game!";
         isNewGame = !isNewGame;
         },
@@ -51,24 +52,25 @@ const game = {
     losses: 0,
     lose: function() {
         this.losses++
+        alert("Idiot! Idiot! The answer was " + this.currentCharacter.firstName + " " + this.currentCharacter.lastName)
         document.getElementById("losses").innerText = this.losses;
         document.getElementById("start").innerText = "Press any key to begin another game!";
         isNewGame = !isNewGame;
-        },
+    },
     
     guessLetter: function() {
-        --this.guessesRemaining;
         document.getElementById("guesses").innerText = this.guessesRemaining;
-        if (this.guessesRemaining === 0) {
+        this.lettersGuessed.push(letter);
+        document.getElementById("letters-guessed").innerText = this.lettersGuessed.join(", ").toUpperCase();
+        --this.guessesRemaining;
+        if (this.guessesRemaining <= 0) {
             this.lose();
         }
-        this.lettersGuessed.push(letter);
-        document.getElementById("letters-guessed").innerHTML = this.lettersGuessed.join(", ").toUpperCase();
     },
 
     //stores user input for current game
     correctGuesses: 0,
-    guessesRemaining: 7, 
+    guessesRemaining: 8, 
     lettersGuessed: [], 
     currentCharacter: {
         numOfLettersFirst: 0,
@@ -81,43 +83,69 @@ const game = {
         numOfCharacters = this.characters.length; //also works to get length of an object: Object.keys(this.characters).length));
         randomCharacterIndex = Math.floor(Math.random()*numOfCharacters);
         newCharacter = this.characters[randomCharacterIndex];
-        this.currentCharacter.firstName = newCharacter[0]; //reassigns firstName variable in currentCharacter object to the random name just picked
-        this.currentCharacter.lastName = newCharacter[1]; //ditto for lastName
+        this.currentCharacter.firstName = newCharacter[0];
+        this.currentCharacter.lastName = newCharacter[1];
         this.currentCharacter.numOfLettersFirst = newCharacter[0].length;
         this.currentCharacter.numOfLettersLast = newCharacter[1].length;
+
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
+
         for (i = 0; i < this.currentCharacter.numOfLettersFirst; i++) {
             document.getElementById("first" + i).innerText = "_ ";
             }
-            if (this.isFirstNamesOnly === false) {
-                for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
-                document.getElementById("last" + i).innerText = "_ ";
-                }
+
+        if (this.isFirstNamesOnly === false) {
+            
+            for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
+            document.getElementById("last" + i).innerText = "_ ";
             }
-        },
+
+        }
+
+    },
+
+    isDuplicate: false,
+    checkForDuplicate: function() {
+    for (i=0; i < this.lettersGuessed.length; i++) {
+            if (letter === this.lettersGuessed[i].toLowerCase()){
+                alert("Letter already guessed!");
+                this.isDuplicate = true;
+            }
+        }   
+    },
 
     checkLetter: function() {
-        for (i=0; i < this.currentCharacter.firstName.length; i++) {
-            if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
-                console.log(letter + " is a match")
-                document.getElementById("first" + i).innerText = letter.toUpperCase();
-                ++this.correctGuesses;
-                    if (this.correctGuesses === this.currentCharacter.numOfLettersFirst) {
-                        this.win();
-                    }
-                }
-            if (this.isFirstNamesOnly === false) {
-                for (i=0; i < this.currentCharacter.lastName.length; i++) {
-                    if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
+        this.checkForDuplicate(); //prevents previously guessed number from incrementing correctGuesses (and triggering a false win)
+        if (this.isDuplicate === false) {
+        
+            for (i=0; i < this.currentCharacter.firstName.length; i++) {
+                
+                if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
                     console.log(letter + " is a match")
-                    document.getElementById("last" + i).innerText = letter;
-                    ++this.correctGuesses;
-                    //REWRITE FUNCTION TO ADD NUMBER OF FIRST AND LAST LETTERS FOR BOTH NAMES MODE
+                    document.getElementById("first" + i).innerText = letter.toUpperCase();
+                        ++this.correctGuesses;
+                        console.log("correct guesses: " + this.correctGuesses)
+                        if (this.correctGuesses === this.currentCharacter.numOfLettersFirst) {
+                            setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
+                        }
                     }
                 }
             }
-        }
+        this.isDuplicate = false; //resets duplicate preventor till next letter is chosen
+        
+            //REWRITE FUNCTION TO ADD NUMBER OF FIRST AND LAST LETTERS FOR BOTH NAMES
+            // if (this.isFirstNamesOnly === false) {
+            //     for (i=0; i < this.currentCharacter.lastName.length; i++) {
+            //         if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
+            //         console.log(letter + " is a match")
+            //         document.getElementById("last" + i).innerText = letter;
+            //         ++this.correctGuesses;
+            //         }
+            //     }
+            // }
+
     },
+
     characters: [
         ["Michael", "Scott"],
         ["Dwight", "Schrute"],
@@ -150,7 +178,7 @@ const game = {
         ["Jo", "Bennett"],
         ["Robert", "Lipton"],
         ["Nate", "Nickerson"],
-        ["Deangelo", "Vicerks"],
+        ["Deangelo", "Vicers"],
         ["Val", "Johnson"],
         ["Cathy", "Simms"],
     ],
