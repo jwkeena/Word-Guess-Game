@@ -17,6 +17,8 @@
             </div>
             <br>
             <div class="left-align">
+                <button id = "mode" title="button only works between games" onclick="game.switchMode();">Current mode: </button>
+                <div id ="current-mode" style="display: inline-block; position: relative; bottom: 10px;">First names only</div>
                 <p  id="start">Press any key to get started!</p><br>
                 <p>Current character: 
                     <span id = "first0"></span> 
@@ -32,8 +34,8 @@
                     <span id = "first10"></span> 
                     &nbsp;
                     <span id = "last0"></span>
-                    <span id = "last2"></span>
                     <span id = "last1"></span>
+                    <span id = "last2"></span>
                     <span id = "last3"></span>
                     <span id = "last4"></span>
                     <span id = "last5"></span>
@@ -42,12 +44,13 @@
                     <span id = "last8"></span>
                     <span id = "last9"></span>
                     <span id = "last10"></span></p><br>
-                <p>Guesses remaining: <span id="guesses">9</span></p><br>
+                <p>Guesses remaining: <span id="guesses">12</span></p><br>
                 <p>Letters already guessed: <span id="letters-guessed"></span></p><br>
                 <p>Wins: <span id = "wins">0</span></p><br>
-                <p>Losses: <span id = "losses">0</span></p>
+                <p>Losses: <span id = "losses">0</span></p><br>
             </div>
 
+            <img id="watermark" src="assets/images/dundermifflin.png">
         <script src="assets/javascript/game.js" async defer></script>
     </body>
 </html>

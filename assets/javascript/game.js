@@ -6,6 +6,7 @@ document.onkeyup = function(event) {
     letter = event.key;
     if (isNewGame === false) {
         game.startGame();
+        document.getElementById("mode").disabled = true
     } else {
         game.checkLetter();
     }
@@ -17,8 +18,8 @@ const game = {
         this.preventloss = false;
         this.correctGuesses = 0;
         document.getElementById("start").innerText = "Computron has chosen the next character...";
-        this.guessesRemaining = 9;
-        document.getElementById("guesses").innerText = 9;
+        this.guessesRemaining = 12;
+        document.getElementById("guesses").innerText = 12;
         this.lettersGuessed = [];
         document.getElementById("letters-guessed").innerText = "";
         for (i=0; i < 11; i++){
@@ -30,12 +31,16 @@ const game = {
     
     //toggle difficulty (easy mode does first name only, hard mode does first and last)
     isFirstNamesOnly: true,
-    changeMode: function() {
+    switchMode: function() {
         if (this.isFirstNamesOnly) {
             this.isFirstNamesOnly = false;
+            document.getElementById("current-mode").innerText = "First and last names"
+
         } else {
             this.isFirstNamesOnly = true;
-        }},
+            document.getElementById("current-mode").innerText="First names only"
+        }
+    console.log(this.isFirstNamesOnly)},
 
     //tracks wins
     wins: 0,
@@ -45,6 +50,7 @@ const game = {
         alert("You win/win/win! The important difference here is with win/win/win, we all win. Me too. I win for having successfully mediated a conflict at work.")
         document.getElementById("wins").innerText = game.wins; //for some reason I can't put "this.wins" in this line 
         document.getElementById("start").innerText = "Press any key to begin another game!";
+        document.getElementById("mode").disabled = false;
         isNewGame = !isNewGame;
         },
 
@@ -55,12 +61,13 @@ const game = {
         alert("Idiot! Idiot! The answer was " + game.currentCharacter.firstName + " " + game.currentCharacter.lastName)
         document.getElementById("losses").innerText = game.losses;
         document.getElementById("start").innerText = "Press any key to begin another game!";
+        document.getElementById("mode").disabled = false;
         isNewGame = !isNewGame;
     },
     
     //stores user input for current game
     correctGuesses: 0,
-    guessesRemaining: 9, 
+    guessesRemaining: 12, 
     lettersGuessed: [], 
     currentCharacter: {
         numOfLettersFirst: 0,
@@ -85,13 +92,10 @@ const game = {
             }
 
         if (this.isFirstNamesOnly === false) {
-            
             for (i = 0; i < this.currentCharacter.numOfLettersLast; i++) {
             document.getElementById("last" + i).innerText = "_ ";
             }
-
         }
-
     },
 
     isDuplicate: false,
@@ -117,6 +121,7 @@ const game = {
         this.checkForDuplicate(); //prevents previously guessed number from incrementing correctGuesses (and triggering a false win)
         if (this.isDuplicate === false) {
         
+            //checks first names only
             for (i=0; i < this.currentCharacter.firstName.length; i++) {
                 
                 if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
@@ -124,32 +129,39 @@ const game = {
                     document.getElementById("first" + i).innerText = letter.toUpperCase();
                         ++this.correctGuesses;
                         console.log("correct guesses: " + this.correctGuesses)
-                        if (this.correctGuesses === this.currentCharacter.numOfLettersFirst) {
-                            debugger;
+                        if (this.correctGuesses === this.currentCharacter.numOfLettersFirst && this.isFirstNamesOnly === true) {
                             game.preventLoss = true;
                             setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
                         }
                     }
                 }
             }
-        this.isDuplicate = false; //resets duplicate preventor till next letter is chosen
-        this.guessLetter();
-        console.log("Guesses remaining" + this.guessesRemaining);
+
+            //checks last names only if the mode button is clicked
+            if (this.isFirstNamesOnly === false) {
+
+                for (i=0; i < this.currentCharacter.lastName.length; i++) {
+                    
+                    if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
+                        console.log(letter + " is a match")
+                        document.getElementById("last" + i).innerText = letter.toUpperCase();
+                            ++this.correctGuesses;
+                            console.log("correct guesses: " + this.correctGuesses)
+                            if (this.correctGuesses === this.currentCharacter.numOfLettersFirst + this.currentCharacter.numOfLettersLast) {
+                                game.preventLoss = true;
+                                setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
+                            }
+                        }
+                    }
+                }
+
+
+            this.isDuplicate = false; //resets duplicate preventor till next letter is chosen
+            this.guessLetter();
         
-        if (this.guessesRemaining === 0 && game.preventLoss === false) {
-            setTimeout(this.lose, 201);
-        }
-        
-            //REWRITE FUNCTION TO ADD NUMBER OF FIRST AND LAST LETTERS FOR BOTH NAMES
-            // if (this.isFirstNamesOnly === false) {
-            //     for (i=0; i < this.currentCharacter.lastName.length; i++) {
-            //         if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
-            //         console.log(letter + " is a match")
-            //         document.getElementById("last" + i).innerText = letter;
-            //         ++this.correctGuesses;
-            //         }
-            //     }
-            // }
+            if (this.guessesRemaining === 0 && game.preventLoss === false) {
+                setTimeout(this.lose, 201);
+            }
 
     },
 
@@ -185,7 +197,7 @@ const game = {
         ["Jo", "Bennett"],
         ["Robert", "Lipton"],
         ["Nate", "Nickerson"],
-        ["Deangelo", "Vicers"],
+        ["Deangelo", "Vickers"],
         ["Val", "Johnson"],
         ["Cathy", "Simms"],
     ],
