@@ -18,8 +18,9 @@ const game = {
         isNewGame = !isNewGame;
         this.preventloss = false;
         this.correctGuesses = 0;
-        document.getElementById("start").innerText = "Computron has chosen the next character:";
-        document.getElementById("start").style = "font-family: 'Press Start 2P', cursive; font-size: 17px;"
+        document.getElementById("current-portrait").src="assets/images/static.gif";
+        document.getElementById("start").innerText = "Computron has chosen the next character...";
+        document.getElementById("start").style = "font-family: 'Press Start 2P', cursive; font-size: 16px;"
         this.guessesRemaining = 12;
         document.getElementById("guesses").innerText = 12;
         this.lettersGuessed = [];
@@ -74,8 +75,8 @@ const game = {
         document.getElementById("hint").disabled = true;
         document.getElementById("current-hint").innerText = "One per game";
         document.getElementById("start").style = "font-family: Helvetica, sans-serif;"
-        document.getElementById("current-portrait").src = this.currentCharacter.portrait;
-        isNewGame = !isNewGame;
+        document.getElementById("current-portrait").src = game.currentCharacter.portrait;
+        isNewGame = false;
     },
     
     //stores user input for current game
@@ -87,7 +88,7 @@ const game = {
         numOfLettersLast: 0,
         firstName: "",
         lastName: "",
-        hint: "",
+        hint: "One per game",
         portrait: "",
         }, 
 
@@ -143,10 +144,8 @@ const game = {
             for (i=0; i < this.currentCharacter.firstName.length; i++) {
                 
                 if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
-                    console.log(letter + " is a match")
                     document.getElementById("first" + i).innerText = letter.toUpperCase();
                         ++this.correctGuesses;
-                        console.log("correct guesses: " + this.correctGuesses)
                         if (this.correctGuesses === this.currentCharacter.numOfLettersFirst && this.isFirstNamesOnly === true) {
                             game.preventLoss = true;
                             setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
@@ -179,6 +178,7 @@ const game = {
         
             if (this.guessesRemaining === 0 && game.preventLoss === false) {
                 setTimeout(this.lose, 201);
+                debugger;
             }
 
     },
@@ -191,7 +191,7 @@ const game = {
         ["Andy", "Bernard", "Anger management", "https://media1.giphy.com/media/YuZrlVuAWzvTG/giphy.gif"],
         ["Robert", "California", "Ultron", "https://media1.tenor.com/images/89b5cd8244497ee5a4b0d4d5197713fd/tenor.gif?itemid=9239993"],
         ["Jan", "Levinson", "Toxic", "https://assets.rbl.ms/18152715/210x.gif"],
-        ["Roy", "Anderson", "Bad match", "https://i.redd.it/n80i9o0bvcwx.jpg"],
+        ["Roy", "Anderson", "Bad match", "https://thumbs.gfycat.com/ClosedSecondaryBilby-small.gif"],
         ["Stanley", "Hudson", "Pretzel day", "https://media.giphy.com/media/j0IvNX2iBd3q0/giphy.gif"],
         ["Kevin", "Malone", "Chili", "https://media1.tenor.com/images/b8319e1ee8daa2da21b7633a7b8c8693/tenor.gif?itemid=5408450"],
         ["Meredith", "Palmer", "Alcoholic", "https://media.giphy.com/media/1399UZyRaVoV5m/giphy.gif"],
