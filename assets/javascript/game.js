@@ -8,17 +8,17 @@ document.onkeyup = function(event) {
         game.startGame();
     } else {
         game.checkLetter();
-        game.guessLetter();
     }
 }
 
 const game = {
     startGame: function() {
         isNewGame = !isNewGame;
+        this.preventloss = false;
         this.correctGuesses = 0;
         document.getElementById("start").innerText = "Computron has chosen the next character...";
-        this.guessesRemaining = 7;
-        document.getElementById("guesses").innerText = 7;
+        this.guessesRemaining = 9;
+        document.getElementById("guesses").innerText = 9;
         this.lettersGuessed = [];
         document.getElementById("letters-guessed").innerText = "";
         for (i=0; i < 11; i++){
@@ -51,26 +51,16 @@ const game = {
     //tracks losses
     losses: 0,
     lose: function() {
-        this.losses++
-        alert("Idiot! Idiot! The answer was " + this.currentCharacter.firstName + " " + this.currentCharacter.lastName)
-        document.getElementById("losses").innerText = this.losses;
+        game.losses++
+        alert("Idiot! Idiot! The answer was " + game.currentCharacter.firstName + " " + game.currentCharacter.lastName)
+        document.getElementById("losses").innerText = game.losses;
         document.getElementById("start").innerText = "Press any key to begin another game!";
         isNewGame = !isNewGame;
     },
     
-    guessLetter: function() {
-        document.getElementById("guesses").innerText = this.guessesRemaining;
-        this.lettersGuessed.push(letter);
-        document.getElementById("letters-guessed").innerText = this.lettersGuessed.join(", ").toUpperCase();
-        --this.guessesRemaining;
-        if (this.guessesRemaining <= 0) {
-            this.lose();
-        }
-    },
-
     //stores user input for current game
     correctGuesses: 0,
-    guessesRemaining: 8, 
+    guessesRemaining: 9, 
     lettersGuessed: [], 
     currentCharacter: {
         numOfLettersFirst: 0,
@@ -114,7 +104,16 @@ const game = {
         }   
     },
 
+    guessLetter: function() {
+        this.lettersGuessed.push(letter);
+        document.getElementById("letters-guessed").innerText = this.lettersGuessed.join(", ").toUpperCase();
+        --this.guessesRemaining;
+        document.getElementById("guesses").innerText = this.guessesRemaining;
+    },
+
+    preventLoss: false,
     checkLetter: function() {
+        this.preventLoss = false;
         this.checkForDuplicate(); //prevents previously guessed number from incrementing correctGuesses (and triggering a false win)
         if (this.isDuplicate === false) {
         
@@ -126,12 +125,20 @@ const game = {
                         ++this.correctGuesses;
                         console.log("correct guesses: " + this.correctGuesses)
                         if (this.correctGuesses === this.currentCharacter.numOfLettersFirst) {
+                            debugger;
+                            game.preventLoss = true;
                             setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
                         }
                     }
                 }
             }
         this.isDuplicate = false; //resets duplicate preventor till next letter is chosen
+        this.guessLetter();
+        console.log("Guesses remaining" + this.guessesRemaining);
+        
+        if (this.guessesRemaining === 0 && game.preventLoss === false) {
+            setTimeout(this.lose, 201);
+        }
         
             //REWRITE FUNCTION TO ADD NUMBER OF FIRST AND LAST LETTERS FOR BOTH NAMES
             // if (this.isFirstNamesOnly === false) {
