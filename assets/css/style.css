@@ -13,7 +13,7 @@ body {
 .logo-container img {
     display: block;
     margin: 0 auto;
-    width: 75%;
+    width: 65%;
     clip-path: inset(3px);
     border-radius: 30px;
 }
@@ -35,11 +35,12 @@ body {
 .left-align {
     display: block;
     text-align: left;
-    font-size: 25px;
-    margin-left: 13.5%;
+    font-size: 20px;
+    margin-left: 18%;
 }
 
-#mode {
+.button {
+    margin-top: 5px;
     position: relative;
     bottom: 10px;
     right: 10px;
@@ -49,10 +50,10 @@ body {
     font-weight: bold;
     border-radius: 10px;
     padding: 15px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
-#mode:hover {
+.button:hover {
     opacity: .8;
 }
 

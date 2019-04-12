@@ -6,7 +6,8 @@ document.onkeyup = function(event) {
     letter = event.key;
     if (isNewGame === false) {
         game.startGame();
-        document.getElementById("mode").disabled = true
+        document.getElementById("mode").disabled = true;
+        document.getElementById("hint").disabled = false;
     } else {
         game.checkLetter();
     }
@@ -18,6 +19,7 @@ const game = {
         this.preventloss = false;
         this.correctGuesses = 0;
         document.getElementById("start").innerText = "Computron has chosen the next character...";
+        document.getElementById("start").style = "font-family: 'Press Start 2P', cursive;"
         this.guessesRemaining = 12;
         document.getElementById("guesses").innerText = 12;
         this.lettersGuessed = [];
@@ -42,6 +44,10 @@ const game = {
         }
     console.log(this.isFirstNamesOnly)},
 
+    hint: function() {
+        document.getElementById("current-hint").innerText = this.currentCharacter.hint;
+    },
+
     //tracks wins
     wins: 0,
     win: function() {
@@ -51,6 +57,9 @@ const game = {
         document.getElementById("wins").innerText = game.wins; //for some reason I can't put "this.wins" in this line 
         document.getElementById("start").innerText = "Press any key to begin another game!";
         document.getElementById("mode").disabled = false;
+        document.getElementById("hint").disabled = true;
+        document.getElementById("current-hint").innerText = "One per game";
+        document.getElementById("start").style = "font-family: Helvetica, sans-serif;"
         isNewGame = !isNewGame;
         },
 
@@ -62,6 +71,9 @@ const game = {
         document.getElementById("losses").innerText = game.losses;
         document.getElementById("start").innerText = "Press any key to begin another game!";
         document.getElementById("mode").disabled = false;
+        document.getElementById("hint").disabled = true;
+        document.getElementById("current-hint").innerText = "One per game";
+        document.getElementById("start").style = "font-family: Helvetica, sans-serif;"
         isNewGame = !isNewGame;
     },
     
@@ -73,7 +85,8 @@ const game = {
         numOfLettersFirst: 0,
         numOfLettersLast: 0,
         firstName: "",
-        lastName: ""
+        lastName: "",
+        hint: "",
         }, 
 
     pickNewCharacter: function() {
@@ -84,6 +97,8 @@ const game = {
         this.currentCharacter.lastName = newCharacter[1];
         this.currentCharacter.numOfLettersFirst = newCharacter[0].length;
         this.currentCharacter.numOfLettersLast = newCharacter[1].length;
+        this.currentCharacter.hint = newCharacter[2];
+        console.log(newCharacter[2])
 
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
 
@@ -166,40 +181,40 @@ const game = {
     },
 
     characters: [
-        ["Michael", "Scott"],
-        ["Dwight", "Schrute"],
-        ["Jim", "Halpert"],
-        ["Pam", "Beesly"],
-        ["Andy", "Bernard"],
-        ["Robert", "California"],
-        ["Jan", "Levinson"],
-        ["Roy", "Anderson"],
-        ["Stanley", "Hudson"],
-        ["Kevin", "Malone"],
-        ["Meredith", "Palmer"],
-        ["Angela", "Martin"],
-        ["Oscar", "Martinez"],
-        ["Phyllis", "Lapin"],
-        ["Kelly", "Kapoor"],
-        ["Toby", "Flenderson"],
-        ["Creed", "Bratton"],
-        ["Darryl", "Philbin"],
+        ["Michael", "Scott", "Really? this one is pretty obvious"],
+        ["Dwight", "Schrute", "Sidekick"],
+        ["Jim", "Halpert", "A smelly fish"],
+        ["Pam", "Beesly", "The office mattress"],
+        ["Andy", "Bernard", "Anger management"],
+        ["Robert", "California", "Ultron"],
+        ["Jan", "Levinson", "Toxic"],
+        ["Roy", "Anderson", "Bad match"],
+        ["Stanley", "Hudson", "Pretzel day"],
+        ["Kevin", "Malone", "Chili"],
+        ["Meredith", "Palmer", "Alcoholic"],
+        ["Angela", "Martin", "Sprinkles"],
+        ["Oscar", "Martinez", "Gil"],
+        ["Phyllis", "Lapin", "Vance"],
+        ["Kelly", "Kapoor", "Diwali"],
+        ["Toby", "Flenderson", "The worst"],
+        ["Creed", "Bratton", "BOBODDY"],
+        ["Darryl", "Philbin", "Warehouse"],
         ["Erin", "Hannon"], //Her real first name is Kelly
-        ["Gabe", "Lewis"],
-        ["Holly", "Flax"],
-        ["Nellie", "Bertram"],
-        ["Clark", "Green"],
-        ["Pete", "Miller"],
-        ["Todd", "Packer"],
-        ["David", "Wallace"],
-        ["Karen", "Filippelli"],
-        ["Charles", "Miner"],
-        ["Jo", "Bennett"],
-        ["Robert", "Lipton"],
-        ["Nate", "Nickerson"],
-        ["Deangelo", "Vickers"],
-        ["Val", "Johnson"],
-        ["Cathy", "Simms"],
+        ["Gabe", "Lewis", "Getting attacked by a skeleton"],
+        ["Holly", "Flax", "Anti-matter Jan"],
+        ["Nellie", "Bertram", "Uslurps Andy's job"],
+        ["Clark", "Green", "Babyface boring character in season 9"],
+        ["Pete", "Miller", "Plop"],
+        ["Todd", "Packer", "Disgusting"],
+        ["David", "Wallace", "Corporate"],
+        ["Karen", "Filippelli", "Wrong girlfriend"],
+        ["Charles", "Miner", "He's aware of the effect he has on women"],
+        ["Jo", "Bennett", ""],
+        ["Robert", "Lipton", "He holds political office"],
+        ["Nate", "Nickerson", "Hard of hearing"],
+        ["Deangelo", "Vickers", "Quickly hospitalized"],
+        ["Val", "Johnson", "Darryl's girlfriend. This one is impossible"],
+        ["Cathy", "Simms", "Let's seduce Jim!"],
     ],
     
 }
