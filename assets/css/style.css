@@ -1,7 +1,7 @@
 body {
     background-image: url("../images/paper.jpg");
     font-family: Helvetica, sans-serif;
-    font-weight: bold;
+    font-weight: bold;  
 }
 
 .logo-container {
@@ -23,10 +23,10 @@ body {
     text-align: left;
     font-size: 20px;
     margin-left: 18%;
+    margin-right: 18%;
 }
 
 .button {
-    margin-top: 5px;
     position: relative;
     bottom: 10px;
     right: 5px;
@@ -51,6 +51,27 @@ body {
     width: 100px;
 }
 
+.tv-container {
+    position: relative;
+}
+
+#current-portrait {
+
+    position: absolute;
+    width: 196px;
+    height: 150px;
+    border-radius: 10px;
+    top: 118px;
+    right: 80px;
+}
+
+.tv {
+    width: 300px;
+    position: relative;
+    float: right;
+    
+
+}
 /* Styles the words inside the logo
 <span id = "title">By a non-graphic designer</span>
 .logo-container span {

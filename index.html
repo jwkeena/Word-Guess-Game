@@ -17,10 +17,17 @@
             </div>
             <br>
             <div class="left-align">
+
+                
+                <div class = "tv-container">
+                    <img class="tv" src="assets/images/tv.png">
+                    <img id ="current-portrait" src = "assets/images/static.gif">
+                </div>
                 <p id="start">Press any key to get started!</p><br>
                 <button id = "mode" class = "button" title="button only works between games" onclick="game.switchMode();">Current mode: </button>
                 <div id = "current-mode" class ="choice" style="display: inline-block; position: relative; bottom: 10px;">First names only</div>
                 <br>
+                
                 <button id="hint" class = "button" title="button only works during games" onclick="game.hint();">Hint: </button>
                 <div id="current-hint" class ="choice" style="display: inline-block; position: relative; bottom: 10px;">One per game</div>
                 <p>Current character: 
@@ -47,7 +54,7 @@
                     <span id = "last8"></span>
                     <span id = "last9"></span>
                     <span id = "last10"></span></p><br>
-                <p>Guesses remaining: <span id="guesses">12</span></p><br>
+                    <p>Guesses remaining: <span id="guesses">12</span></p><br>
                 <p>Letters already guessed: <span id="letters-guessed"></span></p><br>
                 <p>Wins: <span id = "wins">0</span></p><br>
                 <p>Losses: <span id = "losses">0</span></p><br>
