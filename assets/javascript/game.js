@@ -178,7 +178,6 @@ const game = {
         
             if (this.guessesRemaining === 0 && game.preventLoss === false) {
                 setTimeout(this.lose, 201);
-                debugger;
             }
 
     },
