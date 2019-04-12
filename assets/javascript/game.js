@@ -52,7 +52,6 @@ const game = {
     wins: 0,
     win: function() {
         game.wins++ //for some reason I can't put "this.wins" in this line 
-        console.log(this.wins)
         alert("You win/win/win! The important difference here is with win/win/win, we all win. Me too. I win for having successfully mediated a conflict at work.")
         document.getElementById("wins").innerText = game.wins; //for some reason I can't put "this.wins" in this line 
         document.getElementById("start").innerText = "Press any key to begin another game!";
@@ -98,7 +97,6 @@ const game = {
         this.currentCharacter.numOfLettersFirst = newCharacter[0].length;
         this.currentCharacter.numOfLettersLast = newCharacter[1].length;
         this.currentCharacter.hint = newCharacter[2];
-        console.log(newCharacter[2])
 
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
 
@@ -181,10 +179,10 @@ const game = {
     },
 
     characters: [
-        ["Michael", "Scott", "Really? this one is pretty obvious"],
+        ["Michael", "Scott", "You don't deserve a hint for this one"],
         ["Dwight", "Schrute", "Sidekick"],
         ["Jim", "Halpert", "A smelly fish"],
-        ["Pam", "Beesly", "The office mattress"],
+        ["Pam", "Beesly", "Eligible"],
         ["Andy", "Bernard", "Anger management"],
         ["Robert", "California", "Ultron"],
         ["Jan", "Levinson", "Toxic"],
@@ -194,26 +192,26 @@ const game = {
         ["Meredith", "Palmer", "Alcoholic"],
         ["Angela", "Martin", "Sprinkles"],
         ["Oscar", "Martinez", "Gil"],
-        ["Phyllis", "Lapin", "Vance"],
+        ["Phyllis", "Lapin", "Pre-Vance"],
         ["Kelly", "Kapoor", "Diwali"],
         ["Toby", "Flenderson", "The worst"],
         ["Creed", "Bratton", "BOBODDY"],
         ["Darryl", "Philbin", "Warehouse"],
-        ["Erin", "Hannon"], //Her real first name is Kelly
+        ["Erin", "Hannon", "Real first name: Kelly"], 
         ["Gabe", "Lewis", "Getting attacked by a skeleton"],
         ["Holly", "Flax", "Anti-matter Jan"],
         ["Nellie", "Bertram", "Uslurps Andy's job"],
         ["Clark", "Green", "Babyface boring character in season 9"],
         ["Pete", "Miller", "Plop"],
-        ["Todd", "Packer", "Disgusting"],
+        ["Todd", "Packer", "Every disgusting frat boy rolled into one disgusting person"],
         ["David", "Wallace", "Corporate"],
-        ["Karen", "Filippelli", "Wrong girlfriend"],
+        ["Karen", "Filippelli", "The wrong girlfriend"],
         ["Charles", "Miner", "He's aware of the effect he has on women"],
-        ["Jo", "Bennett", ""],
+        ["Jo", "Bennett", "Author of Take a Good Look"],
         ["Robert", "Lipton", "He holds political office"],
         ["Nate", "Nickerson", "Hard of hearing"],
         ["Deangelo", "Vickers", "Quickly hospitalized"],
-        ["Val", "Johnson", "Darryl's girlfriend. This one is impossible"],
+        ["Val", "Johnson", "This one is impossible. Just give up"],
         ["Cathy", "Simms", "Let's seduce Jim!"],
     ],
     
