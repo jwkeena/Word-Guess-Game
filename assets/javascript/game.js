@@ -224,7 +224,8 @@ const game = {
         ["David", "Brent", "British Michael", "https://i.makeagif.com/media/12-01-2015/dZc6vP.gif"],
         ["Bob", "Vance", "Keep your food cold", "https://media.giphy.com/media/R94tA7YxGzVxS/giphy.gif"],
         ["Cece", "Halpert", "Baby #1", "https://49.media.tumblr.com/50555306ff1675332cb6e6f83e68b7dc/tumblr_nz9yo6TrNF1sjpwazo1_250.gif"],
-        ["Philip", "Halpert", "Baby #2", "https://66.media.tumblr.com/a09b088a2b8132084dd3cac79a5318ab/tumblr_msy9t76pKk1qm2l53o1_250.gif"]
+        ["Philip", "Halpert", "Baby #2", "https://66.media.tumblr.com/a09b088a2b8132084dd3cac79a5318ab/tumblr_msy9t76pKk1qm2l53o1_250.gif"],
+        ["Michael", "Scarn", "Clean-up on aisle five", "https://media.giphy.com/media/ZZtQCUtUBOUpi/giphy.gif"]
     ],
     
 }
