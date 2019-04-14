@@ -6,8 +6,6 @@ document.onkeyup = function(event) {
     letter = event.key;
     if (isNewGame === false) {
         game.startGame();
-        document.getElementById("mode").disabled = true;
-        document.getElementById("hint").disabled = false;
     } else {
         game.checkLetter();
     }
@@ -16,6 +14,8 @@ document.onkeyup = function(event) {
 const game = {
     startGame: function() {
         isNewGame = !isNewGame;
+        document.getElementById("mode").disabled = true;
+        document.getElementById("hint").disabled = false;
         this.preventloss = false;
         this.correctGuesses = 0;
         document.getElementById("current-portrait").src="assets/images/static.gif";
@@ -52,7 +52,7 @@ const game = {
     //tracks wins
     wins: 0,
     win: function() {
-        game.wins++ //for some reason I can't put "this.wins" in this line 
+        game.wins++ //for some reason I can't put "this.wins" in this line; it's bound to the window, not the game object
         alert("You win/win/win! The important difference here is with win/win/win, we all win. Me too. I win for having successfully mediated a conflict at work.")
         document.getElementById("wins").innerText = game.wins; //for some reason I can't put "this.wins" in this line 
         document.getElementById("start").innerText = "Press any key to begin another game!";
@@ -93,6 +93,7 @@ const game = {
         }, 
 
     pickNewCharacter: function() {
+        console.log(this);
         numOfCharacters = this.characters.length; //also works to get length of an object: Object.keys(this.characters).length));
         randomCharacterIndex = Math.floor(Math.random()*numOfCharacters);
         newCharacter = this.characters[randomCharacterIndex];
@@ -146,7 +147,6 @@ const game = {
                 if (letter === this.currentCharacter.firstName[i].toLowerCase()) {
                     document.getElementById("first" + i).innerText = letter.toUpperCase();
                         ++this.correctGuesses;
-                        console.log("correct guesses: " + this.correctGuesses)
                         if (this.correctGuesses >= this.currentCharacter.numOfLettersFirst && this.isFirstNamesOnly === true) {
                             game.preventLoss = true;
                             setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
@@ -163,7 +163,6 @@ const game = {
                         console.log(letter + " is a match")
                         document.getElementById("last" + i).innerText = letter.toUpperCase();
                             ++this.correctGuesses;
-                            console.log("correct guesses: " + this.correctGuesses)
                             if (this.correctGuesses === this.currentCharacter.numOfLettersFirst + this.currentCharacter.numOfLettersLast) {
                                 game.preventLoss = true;
                                 setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
