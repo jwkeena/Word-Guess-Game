@@ -21,8 +21,8 @@ const game = {
         document.getElementById("current-portrait").src="assets/images/static.gif";
         document.getElementById("start").innerText = "Computron has chosen the next character...";
         document.getElementById("start").style = "font-family: 'Press Start 2P', cursive; font-size: 16px;"
-        this.guessesRemaining = 12;
-        document.getElementById("guesses").innerText = 12;
+        this.guessesRemaining = 7;
+        document.getElementById("guesses").innerText = 7;
         this.lettersGuessed = [];
         document.getElementById("letters-guessed").innerText = "";
         for (i=0; i < 11; i++){
@@ -43,7 +43,7 @@ const game = {
             this.isFirstNamesOnly = true;
             document.getElementById("current-mode").innerText="First names only"
         }
-    console.log(this.isFirstNamesOnly)},
+    },
 
     hint: function() {
         document.getElementById("current-hint").innerText = this.currentCharacter.hint;
@@ -81,7 +81,7 @@ const game = {
     
     //stores user input for current game
     correctGuesses: 0,
-    guessesRemaining: 12, 
+    guessesRemaining: 7, 
     lettersGuessed: [], 
     currentCharacter: {
         numOfLettersFirst: 0,
@@ -93,18 +93,15 @@ const game = {
         }, 
 
     pickNewCharacter: function() {
-        console.log(this);
         numOfCharacters = this.characters.length; //also works to get length of an object: Object.keys(this.characters).length));
         randomCharacterIndex = Math.floor(Math.random()*numOfCharacters);
         newCharacter = this.characters[randomCharacterIndex];
-        this.currentCharacter.firstName = newCharacter[0];
-        this.currentCharacter.lastName = newCharacter[1];
+        this.currentCharacter.firstName = newCharacter[0].toLowerCase();
+        this.currentCharacter.lastName = newCharacter[1].toLowerCase();
         this.currentCharacter.numOfLettersFirst = newCharacter[0].length;
         this.currentCharacter.numOfLettersLast = newCharacter[1].length;
         this.currentCharacter.hint = newCharacter[2];
         this.currentCharacter.portrait = newCharacter[3];
-
-        console.log(this.currentCharacter.portrait)
         console.log("Here's the answer, cheater: " + newCharacter[0] + " " + newCharacter[1]);
 
         for (i = 0; i < this.currentCharacter.numOfLettersFirst; i++) {
@@ -131,8 +128,6 @@ const game = {
     guessLetter: function() {
         this.lettersGuessed.push(letter);
         document.getElementById("letters-guessed").innerText = this.lettersGuessed.join(", ").toUpperCase();
-        --this.guessesRemaining;
-        document.getElementById("guesses").innerText = this.guessesRemaining;
     },
 
     preventLoss: false,
@@ -151,8 +146,14 @@ const game = {
                             game.preventLoss = true;
                             setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
                         }
-                    }
+                    } 
                 }
+
+            //decrements incorrect guesses remaining only if the letter guessed is not found in the name
+            if (this.isFirstNamesOnly === true && this.currentCharacter.firstName.includes(letter) === false) {
+                --this.guessesRemaining;
+                document.getElementById("guesses").innerText = this.guessesRemaining;
+            }
 
             //checks last names only if the mode button is clicked
             if (this.isFirstNamesOnly === false) {
@@ -160,17 +161,21 @@ const game = {
                 for (i=0; i < this.currentCharacter.lastName.length; i++) {
                     
                     if (letter === this.currentCharacter.lastName[i].toLowerCase()) {
-                        console.log(letter + " is a match")
                         document.getElementById("last" + i).innerText = letter.toUpperCase();
                             ++this.correctGuesses;
                             if (this.correctGuesses === this.currentCharacter.numOfLettersFirst + this.currentCharacter.numOfLettersLast) {
                                 game.preventLoss = true;
                                 setTimeout(this.win, 200); //don't put () after function call inside setTimeout method
                             }
-                        }
+                        } 
                     }
                 }
+            //decrements incorrect guesses remaining only if the letter guessed is not found in the name
+            if (this.isFirstNamesOnly === false && this.currentCharacter.firstName.includes(letter) === false && this.currentCharacter.lastName.includes(letter) === false) {
+                --this.guessesRemaining;
+                document.getElementById("guesses").innerText = this.guessesRemaining;
             }
+        }
 
 
 
