@@ -177,8 +177,6 @@ const game = {
             }
         }
 
-
-
             this.isDuplicate = false; //resets duplicate preventor till next letter is chosen
             this.guessLetter();
         
@@ -229,7 +227,7 @@ const game = {
         ["Bob", "Vance", "Keep your food cold", "https://media.giphy.com/media/R94tA7YxGzVxS/giphy.gif"],
         ["Cece", "Halpert", "Baby #1", "https://49.media.tumblr.com/50555306ff1675332cb6e6f83e68b7dc/tumblr_nz9yo6TrNF1sjpwazo1_250.gif"],
         ["Philip", "Halpert", "Baby #2", "https://66.media.tumblr.com/a09b088a2b8132084dd3cac79a5318ab/tumblr_msy9t76pKk1qm2l53o1_250.gif"],
-        ["Michael", "Scarn", "Clean-up on aisle five", "https://media.giphy.com/media/ZZtQCUtUBOUpi/giphy.gif"]
+        ["Michael", "Scarn", "Clean-up on aisle five", "https://media1.tenor.com/images/b98c303aabe3764cc221e191d99a3fe1/tenor.gif?itemid=5750287"]
     ],
     
 }
