@@ -1,14 +1,16 @@
 //waits for any key to be pressed before starting game
-letter = "";
+var letter = "";
 isNewGame = false;
 
 document.onkeyup = function(event) {
-    letter = event.key;
+    letter = event.key.toLowerCase();
     if (isNewGame === false) {
         game.startGame();
     } else {
-        game.checkLetter();
-    }
+        if (event.keyCode > 64 && event.keyCode < 91) {
+            game.checkLetter();
+        }
+    } 
 }
 
 const game = {
